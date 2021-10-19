@@ -30,3 +30,7 @@ stop:
 	@echo "Stopped GWF!"
 
 restart: stop start
+
+sync:
+	@rm -rf ./vendor
+	@go mod vendor
