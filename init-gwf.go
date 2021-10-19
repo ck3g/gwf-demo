@@ -21,7 +21,8 @@ func initApplication() *application {
 	}
 
 	g.AppName = "demoapp"
-	g.Debug = true
+
+	g.InfoLog.Println("Debug is set to ", g.Debug)
 
 	app := &application{
 		App: g,
