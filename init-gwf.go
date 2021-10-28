@@ -1,6 +1,7 @@
 package main
 
 import (
+	"demoapp/handlers"
 	"log"
 	"os"
 
@@ -22,11 +23,16 @@ func initApplication() *application {
 
 	g.AppName = "demoapp"
 
-	g.InfoLog.Println("Debug is set to ", g.Debug)
-
-	app := &application{
+	myHandlers := &handlers.Handlers{
 		App: g,
 	}
+
+	app := &application{
+		App:      g,
+		Handlers: myHandlers,
+	}
+
+	app.App.Routes = app.routes()
 
 	return app
 }
