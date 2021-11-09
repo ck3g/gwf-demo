@@ -9,6 +9,7 @@ require (
 	github.com/ck3g/gwf v0.0.0-20211018084703-71fd9cc80779
 	github.com/go-chi/chi/v5 v5.0.4
 	github.com/upper/db/v4 v4.2.1
+	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
 )
 
 require (
@@ -26,6 +27,5 @@ require (
 	github.com/jackc/pgx/v4 v4.13.0 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/lib/pq v1.10.2 // indirect
-	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/text v0.3.6 // indirect
 )
