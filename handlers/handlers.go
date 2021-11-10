@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"demoapp/data"
 	"net/http"
 
 	"github.com/CloudyKit/jet/v6"
@@ -8,7 +9,8 @@ import (
 )
 
 type Handlers struct {
-	App *gwf.GWF
+	App    *gwf.GWF
+	Models data.Models
 }
 
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {

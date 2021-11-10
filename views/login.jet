@@ -36,7 +36,7 @@ Login
   <a class="btn btn-outline-secondary" href="/">Back...</a>
 </div>
 
-<p>&nbps;</p>
+<p>&nbsp;</p>
 {{end}}
 
 {{block js()}}
