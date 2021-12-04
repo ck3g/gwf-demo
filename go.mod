@@ -6,6 +6,7 @@ replace github.com/ck3g/gwf => ../gwf
 
 require (
 	github.com/CloudyKit/jet/v6 v6.1.0
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/ck3g/gwf v0.0.0-20211018084703-71fd9cc80779
 	github.com/go-chi/chi/v5 v5.0.4
 	github.com/upper/db/v4 v4.2.1
