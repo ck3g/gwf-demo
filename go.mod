@@ -23,6 +23,7 @@ require (
 	github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5 // indirect
 	github.com/alexedwards/scs/mysqlstore v0.0.0-20211203064041-370cc303b69f // indirect
 	github.com/alexedwards/scs/postgresstore v0.0.0-20211203064041-370cc303b69f // indirect
+	github.com/alexedwards/scs/redisstore v0.0.0-20211203064041-370cc303b69f // indirect
 	github.com/alexedwards/scs/v2 v2.4.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
