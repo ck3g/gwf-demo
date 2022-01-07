@@ -11,6 +11,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.4
 	github.com/jackc/pgconn v1.10.0
 	github.com/jackc/pgx/v4 v4.13.0
+	github.com/justinas/nosurf v1.1.1
 	github.com/ory/dockertest/v3 v3.8.1
 	github.com/upper/db/v4 v4.2.1
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
