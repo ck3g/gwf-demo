@@ -40,6 +40,7 @@ restart: stop start
 sync:
 	@rm -rf ./vendor
 	@go mod vendor
+	@go mod tidy
 
 db_connect:
 	@psql -U postgres -W --port=5439 --host=localhost --dbname=gwf_demo
