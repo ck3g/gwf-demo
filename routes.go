@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/ck3g/gwf/mailer"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -35,6 +36,30 @@ func (a *application) routes() *chi.Mux {
 	a.post("/api/get-from-cache", a.Handlers.GetFromCache)
 	a.post("/api/delete-from-cache", a.Handlers.DeleteFromCache)
 	a.post("/api/empty-cache", a.Handlers.EmptyCache)
+
+	a.get("/test-mail", func(w http.ResponseWriter, r *http.Request) {
+		msg := mailer.Message{
+			From:        "test@example.com",
+			To:          "you@there.com",
+			Subject:     "Test subject - sent using channel",
+			Template:    "test",
+			Attachments: nil,
+			Data:        nil,
+		}
+
+		// sending using channels
+		a.App.Mail.Jobs <- msg
+		res := <-a.App.Mail.Results
+		if res.Error != nil {
+			a.App.ErrorLog.Println(res.Error)
+		}
+
+		// sending using func
+		msg.Subject = "Test subject - sent using func"
+		a.App.Mail.SendSMTPMessage(msg)
+
+		fmt.Fprintf(w, "Send amil!")
+	})
 
 	a.get("/create-user", func(w http.ResponseWriter, r *http.Request) {
 		u := data.User{

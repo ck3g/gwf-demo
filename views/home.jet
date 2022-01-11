@@ -33,6 +33,7 @@
         <a href="/download-file" class="list-group-item list-group-item-action">Download file Response</a>
         <a href="/crypto" class="list-group-item list-group-item-action">Test Crypto</a>
         <a href="/cache-test" class="list-group-item list-group-item-action">Test Cache</a>
+        <a href="/test-mail" class="list-group-item list-group-item-action">Test Mail</a>
     </div>
 </div>
 {{end}}
