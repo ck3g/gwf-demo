@@ -216,3 +216,38 @@ func (h *Handlers) ResetPasswordForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (h *Handlers) PostResetPassword(w http.ResponseWriter, r *http.Request) {
+	// parse the form
+	err := r.ParseForm()
+	if err != nil {
+		h.App.Error500(w)
+		return
+	}
+
+	// get and decrypt the email
+	email, err := h.decrypt(r.Form.Get("email"))
+	if err != nil {
+		h.App.Error500(w)
+		return
+	}
+
+	// get the user
+	var u data.User
+	user, err := u.GetByEmail(email)
+	if err != nil {
+		h.App.Error500(w)
+		return
+	}
+
+	// reset the password
+	err = user.ResetPassword(user.ID, r.Form.Get("password"))
+	if err != nil {
+		h.App.Error500(w)
+		return
+	}
+
+	// redirect
+	h.App.Session.Put(r.Context(), "flash", "Password reset. You can now log in.")
+	http.Redirect(w, r, "/users/login", http.StatusSeeOther)
+}
