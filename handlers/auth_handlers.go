@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/ck3g/gwf/mailer"
+	"github.com/ck3g/gwf/urlsigner"
 )
 
 func (h *Handlers) UserLogin(w http.ResponseWriter, r *http.Request) {
@@ -118,4 +121,59 @@ func (h *Handlers) Forgot(w http.ResponseWriter, r *http.Request) {
 		h.App.ErrorLog.Println("Error rendering: ", err)
 		h.App.Error500(w)
 	}
+}
+
+func (h *Handlers) PostForgot(w http.ResponseWriter, r *http.Request) {
+	// parse form
+	err := r.ParseForm()
+	if err != nil {
+		h.App.ErrorStatus(w, http.StatusBadRequest)
+		return
+	}
+
+	// verify that supplied email exists
+	var u *data.User
+	email := r.Form.Get("email")
+	u, err = u.GetByEmail(email)
+	if err != nil {
+		h.App.ErrorStatus(w, http.StatusBadRequest)
+		return
+	}
+
+	// create a link to password reset form
+	link := fmt.Sprintf("%s/users/reset-password?email=%s", h.App.Server.URL, email)
+
+	// sign the link
+	sign := urlsigner.Signer{
+		Secret: []byte(h.App.EncryptionKey),
+	}
+
+	signedLink := sign.GenerateTokenFromString(link)
+
+	h.App.InfoLog.Println("Signed link is", signedLink)
+
+	// email the message
+	var data struct {
+		Link string
+	}
+
+	data.Link = signedLink
+
+	msg := mailer.Message{
+		To:       u.Email,
+		Subject:  "Password reset",
+		Template: "password-reset",
+		Data:     data,
+		From:     "noreply@example.com",
+	}
+
+	h.App.Mail.Jobs <- msg
+	res := <-h.App.Mail.Results
+	if res.Error != nil {
+		h.App.ErrorStatus(w, http.StatusBadRequest)
+		return
+	}
+
+	// redirect the user
+	http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 }
